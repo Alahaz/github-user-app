@@ -106,8 +106,12 @@
     </string-array>
 
     <string name="app_name">Github User App</string>
-    <string name="username">Username :</string>
-    <string name="nama">Nama</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="nama">Alief Ahmad Azies</string>
+    <string name="username">Alahaz</string>
+    <string name="gojek">Gojek</string>
+    <string name="jakarta">Jakarta</string>
 </resources>
 
 
