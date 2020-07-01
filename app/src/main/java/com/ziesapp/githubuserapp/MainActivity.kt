@@ -34,10 +34,12 @@ class MainActivity : AppCompatActivity() {
         prepare()
         addItem()
 
-//        listView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-//            val intent = Intent(this@MainActivity,)
-//        }
-
+        listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            val intent = Intent(this@MainActivity,DetailActivity::class.java)
+            val parcel = Profile(arrayUsername[position],arrayName[position],arrayLocation[position],arrayRepository[position],arrayCompany[position],arrayFollower[position],arrayFollowing[position],arrayPhoto.getResourceId(position,-1))
+            intent.putExtra(DetailActivity.PARCEL,parcel)
+            startActivity(intent)
+        }
     }
 
     private fun addItem() {
