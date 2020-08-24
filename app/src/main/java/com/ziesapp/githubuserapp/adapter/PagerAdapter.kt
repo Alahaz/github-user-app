@@ -31,7 +31,7 @@ class PagerAdapter(private val context: Context, fm: FragmentManager) : Fragment
         return fragment as Fragment
     }
 
-    override fun getCount(): Int = 2
+    override fun getCount(): Int = TAB_TITLES.size
 
     @Nullable
     override fun getPageTitle(position: Int): CharSequence? {

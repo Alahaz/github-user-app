@@ -8,9 +8,8 @@ import com.bumptech.glide.Glide
 import com.ziesapp.githubuserapp.R
 import com.ziesapp.githubuserapp.data.User
 import kotlinx.android.synthetic.main.list_profile.view.*
-import kotlinx.android.synthetic.main.list_profile.view.tv_username
 
-class ProfileAdapter : RecyclerView.Adapter<ProfileAdapter.profileViewHolder>() {
+class ProfileAdapter : RecyclerView.Adapter<ProfileAdapter.ProfileViewHolder>() {
 
     private val listProfile = ArrayList<User>()
 
@@ -30,8 +29,7 @@ class ProfileAdapter : RecyclerView.Adapter<ProfileAdapter.profileViewHolder>() 
         notifyDataSetChanged()
     }
 
-    inner class profileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+    inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(user: User) {
             with(itemView) {
                 tv_username.text = user.username
@@ -45,15 +43,15 @@ class ProfileAdapter : RecyclerView.Adapter<ProfileAdapter.profileViewHolder>() 
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): profileViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_profile, parent, false)
-        return profileViewHolder(view)
+        return ProfileViewHolder(view)
     }
 
     override fun getItemCount(): Int = listProfile.size
 
-    override fun onBindViewHolder(holder: profileViewHolder, position: Int) =
+    override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) =
         holder.bind(listProfile[position])
 
 }

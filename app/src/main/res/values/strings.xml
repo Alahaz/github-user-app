@@ -5,6 +5,8 @@
     <string name="tab_followers">Followers</string>
     <string name="repo">Repositories</string>
     <string name="change_language">Change Language</string>
+    <string name="todo">TODO</string>
+    <string name="this_is_image">this is image</string>
 </resources>
 
 

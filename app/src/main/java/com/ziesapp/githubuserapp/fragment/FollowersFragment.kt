@@ -9,13 +9,12 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
-import com.ziesapp.githubuserapp.adapter.ProfileAdapter
+import com.ziesapp.githubuserapp.BuildConfig
 import com.ziesapp.githubuserapp.R
+import com.ziesapp.githubuserapp.adapter.ProfileAdapter
 import com.ziesapp.githubuserapp.data.User
 import cz.msebera.android.httpclient.Header
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_followers.*
-import kotlinx.android.synthetic.main.fragment_followers.progressBar
 import org.json.JSONArray
 
 class FollowersFragment : Fragment() {
@@ -63,7 +62,7 @@ class FollowersFragment : Fragment() {
         showProgressBar(true)
         val client = AsyncHttpClient()
         val url = "https://api.github.com/users/$username/followers"
-        client.addHeader("Authorization", "token aaa8a27fa7d182a6b48ac9d79c58c82a54766f82")
+        client.addHeader("Authorization", "token ${BuildConfig.GITHUB_TOKEN}")
         client.addHeader("User-Agent", "request")
         client.get(url, object : AsyncHttpResponseHandler() {
             override fun onSuccess(

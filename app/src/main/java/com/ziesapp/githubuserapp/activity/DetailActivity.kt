@@ -1,7 +1,7 @@
 package com.ziesapp.githubuserapp.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.ziesapp.githubuserapp.R
 import com.ziesapp.githubuserapp.adapter.PagerAdapter
@@ -19,11 +19,10 @@ class DetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail)
 
         this.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//
         setUser()
     }
 
-    fun setUser() {
+    private fun setUser() {
         val getData = intent.getParcelableExtra<User>(PARCEL)
 
         tv_name.text = getData?.name
