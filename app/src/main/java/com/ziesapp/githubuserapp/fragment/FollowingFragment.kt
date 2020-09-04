@@ -9,13 +9,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
-import com.ziesapp.githubuserapp.adapter.ProfileAdapter
 import com.ziesapp.githubuserapp.R
-import com.ziesapp.githubuserapp.data.User
+import com.ziesapp.githubuserapp.adapter.ProfileAdapter
+import com.ziesapp.githubuserapp.model.User
 import cz.msebera.android.httpclient.Header
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_following.*
-import kotlinx.android.synthetic.main.fragment_following.progressBar
 import org.json.JSONArray
 
 class FollowingFragment : Fragment() {

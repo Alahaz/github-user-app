@@ -1,30 +1,80 @@
 package com.ziesapp.githubuserapp.activity
 
+import android.content.ContentValues
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.ziesapp.githubuserapp.R
 import com.ziesapp.githubuserapp.adapter.PagerAdapter
-import com.ziesapp.githubuserapp.data.User
+import com.ziesapp.githubuserapp.db.DatabaseContract.UserColumns.Companion.COLUMN_NAME_AVATAR_URL
+import com.ziesapp.githubuserapp.db.DatabaseContract.UserColumns.Companion.COLUMN_NAME_USERNAME
+import com.ziesapp.githubuserapp.db.DatabaseContract.UserColumns.Companion._ID
+import com.ziesapp.githubuserapp.db.UserHelper
+import com.ziesapp.githubuserapp.model.User
 import kotlinx.android.synthetic.main.activity_detail.*
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity(), View.OnClickListener {
+
+    private var statusFavorite = false
+    private var getData: User? = null
+    private var position: Int = 0
+
+    private lateinit var uriWithId: Uri
+    private lateinit var userHelper: UserHelper
 
     companion object {
         const val PARCEL = "Parcel"
+        const val EXTRA_USER = "extra_user"
+        const val EXTRA_POSITIION = "extra_position"
+        const val REQUEST_ADD = 100
+        const val RESULT_ADD = 101
+        const val REQUEST_UPDATE = 200
+        const val RESULT_UPDATE = 201
+        const val RESULT_DELETE = 301
+        const val ALERT_DIALOG_CLOSE = 10
+        const val ALERT_DIALOG_DELTE = 20
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        this.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setupActionBar()
+
+
+        userHelper = UserHelper.getInstance(applicationContext)
+        userHelper.open()
+
+        getData = intent.getParcelableExtra(PARCEL)
         setUser()
+
+        fab_fav.setOnClickListener(this)
+
+//        if (getData != null){
+//            position = intent.getIntExtra(EXTRA_POSITIION,0)
+//            statusFavorite = true
+//        }else{
+//            getData = User()
+//        }
+
+        //persiapan untuk content resolver
+//        uriWithId = Uri.parse(CONTENT_URI.toString() + "/" + getData?.id)
+//        val checkFav = contentResolver?.query(uriWithId, null, null, null, null)
+//        isAlreadyFavorite(checkFav)
+
+    }
+
+    private fun setupActionBar() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Detailed User"
     }
 
     private fun setUser() {
-        val getData = intent.getParcelableExtra<User>(PARCEL)
-
         tv_name.text = getData?.name
         tv_username.text = getData?.username
         tv_company.text = getData?.company
@@ -35,7 +85,10 @@ class DetailActivity : AppCompatActivity() {
         Glide.with(this)
             .load(getData?.avatar)
             .into(img_foto)
-        val user = User()
+        setupPager()
+    }
+
+    private fun setupPager() {
         val pagerAdapter = PagerAdapter(
             this,
             supportFragmentManager
@@ -46,4 +99,51 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.elevation = 0f
     }
 
+
+    private fun setStatusFavorite(statusFavorite: Boolean) {
+        if (statusFavorite) {
+            fab_fav.setImageResource(R.drawable.fav_solid)
+        } else {
+            fab_fav.setImageResource(R.drawable.fav_border)
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.fab_fav -> setFavorite()
+        }
+    }
+
+//    private fun isAlreadyFavorite(cekAkunFav: Cursor?) {
+//        val userFav = MappingHelper.mapCursorToArrayList(cekAkunFav)
+//        for (data in userFav) {
+//            if (this.getData?.id == data.id) {
+//                statusFavorite = true
+//            }
+//        }
+//    }
+
+    private fun setFavorite() {
+        if (statusFavorite) {
+            userHelper.deleteById(getData?.id.toString()).toLong()
+//                .delete(uriWithId, null, null)
+            Toast.makeText(this, "${getData?.name} Unfavorited", Toast.LENGTH_SHORT).show()
+            statusFavorite = false
+            setStatusFavorite(statusFavorite)
+        } else {
+            val intent = Intent()
+            intent.putExtra(EXTRA_USER, getData)
+
+            val values = ContentValues()
+            values.put(_ID, getData?.id)
+            values.put(COLUMN_NAME_USERNAME, getData?.username)
+            values.put(COLUMN_NAME_AVATAR_URL, getData?.avatar)
+            val result = userHelper.insert(values)
+            setResult(RESULT_ADD, intent)
+//            contentResolver.insert(CONTENT_URI, values)
+            Toast.makeText(this, "${getData?.name} Favorited", Toast.LENGTH_SHORT).show()
+            statusFavorite = true
+            setStatusFavorite(statusFavorite)
+        }
+    }
 }

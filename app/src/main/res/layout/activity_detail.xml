@@ -21,26 +21,26 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        tools:text="Name"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tv_username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/img_foto"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Name" />
 
     <TextView
         android:id="@+id/tv_username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="Username"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/img_foto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tv_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_name"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Username" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -55,22 +55,22 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="8dp"
-        tools:text="No Bio."
         android:textSize="18sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@+id/tv_company"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline" />
+        app:layout_constraintTop_toBottomOf="@id/guideline"
+        tools:text="No Bio." />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:contentDescription="@string/this_is_image"
         android:src="@drawable/work"
         app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="@string/this_is_image"
         app:layout_constraintTop_toBottomOf="@id/tv_bio" />
 
     <TextView
@@ -78,73 +78,73 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        tools:text="No Work."
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@id/imageView" />
+        app:layout_constraintTop_toTopOf="@id/imageView"
+        tools:text="No Work." />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:contentDescription="@string/this_is_image"
         android:src="@drawable/location"
         app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="@string/this_is_image"
         app:layout_constraintTop_toBottomOf="@id/imageView" />
 
     <TextView
         android:id="@+id/tv_location"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="No Location."
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tv_company"
-        app:layout_constraintTop_toTopOf="@id/imageView2" />
+        app:layout_constraintTop_toTopOf="@id/imageView2"
+        tools:text="No Location." />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:contentDescription="@string/this_is_image"
         android:src="@drawable/ic_baseline_web_24"
         app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="@string/this_is_image"
         app:layout_constraintTop_toBottomOf="@id/imageView2" />
 
     <TextView
         android:id="@+id/tv_web"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="No Website."
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/imageView3"
         app:layout_constraintStart_toStartOf="@id/tv_company"
-        app:layout_constraintTop_toTopOf="@id/imageView3" />
+        app:layout_constraintTop_toTopOf="@id/imageView3"
+        tools:text="No Website." />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:contentDescription="@string/todo"
         android:src="@drawable/repo"
         app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="@string/todo"
         app:layout_constraintTop_toBottomOf="@id/imageView3" />
 
     <TextView
         android:id="@+id/tv_repo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="0"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/imageView4"
         app:layout_constraintStart_toStartOf="@id/tv_company"
-        app:layout_constraintTop_toTopOf="@id/imageView4" />
+        app:layout_constraintTop_toTopOf="@id/imageView4"
+        tools:text="0" />
 
     <TextView
         android:layout_width="0dp"
@@ -162,6 +162,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@id/view_pager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageView4"
@@ -171,9 +172,23 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tabs" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_fav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/fav_border" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

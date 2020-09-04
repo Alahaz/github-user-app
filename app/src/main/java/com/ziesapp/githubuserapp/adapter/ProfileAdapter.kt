@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ziesapp.githubuserapp.R
-import com.ziesapp.githubuserapp.data.User
+import com.ziesapp.githubuserapp.model.User
 import kotlinx.android.synthetic.main.list_profile.view.*
 
 class ProfileAdapter : RecyclerView.Adapter<ProfileAdapter.ProfileViewHolder>() {

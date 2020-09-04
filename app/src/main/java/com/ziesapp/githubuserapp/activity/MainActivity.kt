@@ -18,11 +18,10 @@ import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
 import com.ziesapp.githubuserapp.R
 import com.ziesapp.githubuserapp.adapter.ProfileAdapter
-import com.ziesapp.githubuserapp.data.User
+import com.ziesapp.githubuserapp.model.User
 import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
-import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: ProfileAdapter
@@ -57,12 +56,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun showSelectedUser(user: User) {
         User(
+            user.id,
             user.username,
-            user.avatar,
             user.name,
+            user.avatar,
+            user.company,
             user.location,
             user.bio,
-            user.company,
             user.web,
             user.repo
         )
@@ -95,9 +95,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.change_language_settings) {
-            val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-            startActivity(mIntent)
+        when (item.itemId) {
+            R.id.change_language_settings -> {
+                val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+                startActivity(mIntent)
+            }
+            R.id.favorite -> {
+                val mIntent = Intent(this, FavoriteActivity::class.java)
+                startActivity(mIntent)
+            }
+
         }
         return super.onOptionsItemSelected(item)
     }
@@ -159,6 +166,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d("MainActivity", result)
                 try {
                     val responseObject = JSONObject(result)
+                    val id = responseObject.getInt("id")
                     val username = responseObject.getString("login").toString()
                     val avatar = responseObject.getString("avatar_url").toString()
                     val name = responseObject.getString("name").toString()
@@ -169,14 +177,7 @@ class MainActivity : AppCompatActivity() {
                     val web = responseObject.getString("blog").toString()
                     listUser.add(
                         User(
-                            username,
-                            avatar,
-                            name,
-                            location,
-                            bio,
-                            company,
-                            web,
-                            repo
+                            id, username, name, avatar, company, location, bio, web, repo
                         )
                     )
                     adapter.setData(listUser)
