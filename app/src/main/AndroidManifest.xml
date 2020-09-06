@@ -19,6 +19,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <receiver
+            android:name=".provider.ReminderReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
+        <activity
+            android:name=".activity.SettingActivity"
+            android:parentActivityName=".activity.MainActivity" />
 
         <provider
             android:name=".provider.GithubUserProvider"

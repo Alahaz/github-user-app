@@ -4,10 +4,11 @@
     <string name="tab_following">Following</string>
     <string name="tab_followers">Followers</string>
     <string name="repo">Repositories</string>
-    <string name="change_language">Change Language</string>
-    <string name="todo">TODO</string>
     <string name="this_is_image">this is image</string>
     <string name="favorite">Favorite</string>
+    <string name="settings">Settings</string>
+    <string name="reminder_at_09_00_am">Reminder at 09.00 AM</string>
+    <string name="change_language">Change Language</string>
 </resources>
 
 

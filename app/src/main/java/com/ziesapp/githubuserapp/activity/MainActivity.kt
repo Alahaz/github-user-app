@@ -1,10 +1,8 @@
 package com.ziesapp.githubuserapp.activity
 
 import android.app.SearchManager
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -27,19 +25,36 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: ProfileAdapter
     private lateinit var listUser: ArrayList<User>
 
+    companion object {
+        const val NOTIFICATION_ID = 1
+        var CHANNEL_ID = "channel_01"
+        var CHANNEL_NAME: CharSequence = "ziesapp channel"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         listUser = ArrayList()
-        adapter = ProfileAdapter()
-        adapter.notifyDataSetChanged()
+
 
         setAdapter()
+        setNotification()
+
+    }
+
+    private fun sendNotification(view: View) {
+
+
+    }
+
+    private fun setNotification() {
 
     }
 
     private fun setAdapter() {
+        adapter = ProfileAdapter()
+        adapter.notifyDataSetChanged()
         recyclerView_main.layoutManager = LinearLayoutManager(this)
         recyclerView_main.setHasFixedSize(true)
         recyclerView_main.addItemDecoration(
@@ -74,9 +89,14 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        setupSearchbar(menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun setupSearchbar(menu: Menu?) {
         val inflater = menuInflater
         inflater.inflate(R.menu.options_menu, menu)
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
         val searchView = menu?.findItem(R.id.search)?.actionView as SearchView
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -91,17 +111,16 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
         })
-        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.change_language_settings -> {
-                val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-                startActivity(mIntent)
-            }
             R.id.favorite -> {
                 val mIntent = Intent(this, FavoriteActivity::class.java)
+                startActivity(mIntent)
+            }
+            R.id.setting -> {
+                val mIntent = Intent(this, SettingActivity::class.java)
                 startActivity(mIntent)
             }
 

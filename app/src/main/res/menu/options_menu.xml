@@ -3,11 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group android:menuCategory="container">
-        <item
-            android:id="@+id/favorite"
-            android:icon="@drawable/fav_solid"
-            android:title="@string/favorite"
-            app:showAsAction="collapseActionView|ifRoom" />
+
         <item
             android:id="@+id/search"
             android:icon="@drawable/baseline_search_white_18dp"
@@ -15,9 +11,15 @@
             app:actionViewClass="androidx.appcompat.widget.SearchView"
             app:showAsAction="collapseActionView|ifRoom" />
         <item
-            android:id="@+id/change_language_settings"
-            android:title="@string/change_language"
-            app:showAsAction="never" />
+            android:id="@+id/favorite"
+            android:icon="@drawable/fav_solid"
+            android:title="@string/favorite"
+            app:showAsAction="collapseActionView|ifRoom" />
+        <item
+            android:id="@+id/setting"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="@string/settings"
+            app:showAsAction="collapseActionView|ifRoom" />
     </group>
 
 </menu>

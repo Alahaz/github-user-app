@@ -6,4 +6,8 @@
     <string name="tab_followers">Pengikut</string>
     <string name="repo">Repositori</string>
     <string name="change_language">Ubah Bahasa</string>
+    <string name="favorite">Favorit</string>
+    <string name="this_is_image">ini adalah gambar</string>
+    <string name="settings">Pengaturan</string>
+    <string name="reminder_at_09_00_am">Pengaturan pada pukul 9</string>
 </resources>
