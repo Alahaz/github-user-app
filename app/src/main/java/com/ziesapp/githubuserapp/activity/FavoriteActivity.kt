@@ -3,9 +3,11 @@ package com.ziesapp.githubuserapp.activity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ziesapp.githubuserapp.R
 import com.ziesapp.githubuserapp.adapter.FavoriteAdapter
+import com.ziesapp.githubuserapp.db.DatabaseContract.UserColumns.Companion.CONTENT_URI
 import com.ziesapp.githubuserapp.db.UserHelper
 import com.ziesapp.githubuserapp.helper.MappingHelper
 import com.ziesapp.githubuserapp.model.User
@@ -28,16 +30,15 @@ class FavoriteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite)
+
         setupActionBar()
+        setAdapter()
+        databaseSetup(savedInstanceState)
+    }
 
-        rv_favorite.layoutManager = LinearLayoutManager(this)
-        rv_favorite.setHasFixedSize(true)
-        adapter = FavoriteAdapter(this)
-        rv_favorite.adapter = adapter
-
+    private fun databaseSetup(savedInstanceState: Bundle?) {
         userHelper = UserHelper.getInstance(applicationContext)
         userHelper.open()
-
 
         if (savedInstanceState == null) {
             loadUserAsync()
@@ -49,11 +50,24 @@ class FavoriteActivity : AppCompatActivity() {
         }
     }
 
+    private fun setAdapter() {
+        adapter = FavoriteAdapter(this)
+        rv_favorite.layoutManager = LinearLayoutManager(this)
+        rv_favorite.setHasFixedSize(true)
+        rv_favorite.adapter = adapter
+        rv_favorite.addItemDecoration(
+            DividerItemDecoration(
+                rv_favorite.context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
+    }
+
     private fun loadUserAsync() {
         GlobalScope.launch(Dispatchers.Main) {
             val defferedUser = async(Dispatchers.IO) {
-                val cursor = userHelper.queryAll()
-//                val cursor = contentResolver?.query(CONTENT_URI, null, null, null, null)
+//                val cursor = userHelper.queryAll()
+                val cursor = contentResolver?.query(CONTENT_URI, null, null, null, null)
                 MappingHelper.mapCursorToArrayList(cursor)
             }
 
@@ -66,14 +80,8 @@ class FavoriteActivity : AppCompatActivity() {
                     .show()
             }
         }
-//        showRecylerView()
     }
 
-//    private fun showRecylerView() {
-//        rv_favorite.adapter = adapter
-//        rv_favorite.layoutManager = LinearLayoutManager(this)
-//        rv_favorite.setHasFixedSize(true)
-//    }
 
     private fun setupActionBar() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

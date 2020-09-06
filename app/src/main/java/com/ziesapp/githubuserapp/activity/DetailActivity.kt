@@ -2,6 +2,7 @@ package com.ziesapp.githubuserapp.activity
 
 import android.content.ContentValues
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -12,8 +13,10 @@ import com.ziesapp.githubuserapp.R
 import com.ziesapp.githubuserapp.adapter.PagerAdapter
 import com.ziesapp.githubuserapp.db.DatabaseContract.UserColumns.Companion.COLUMN_NAME_AVATAR_URL
 import com.ziesapp.githubuserapp.db.DatabaseContract.UserColumns.Companion.COLUMN_NAME_USERNAME
+import com.ziesapp.githubuserapp.db.DatabaseContract.UserColumns.Companion.CONTENT_URI
 import com.ziesapp.githubuserapp.db.DatabaseContract.UserColumns.Companion._ID
 import com.ziesapp.githubuserapp.db.UserHelper
+import com.ziesapp.githubuserapp.helper.MappingHelper
 import com.ziesapp.githubuserapp.model.User
 import kotlinx.android.synthetic.main.activity_detail.*
 
@@ -55,17 +58,11 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
         fab_fav.setOnClickListener(this)
 
-//        if (getData != null){
-//            position = intent.getIntExtra(EXTRA_POSITIION,0)
-//            statusFavorite = true
-//        }else{
-//            getData = User()
-//        }
+//        persiapan untuk content resolver
+        uriWithId = Uri.parse(CONTENT_URI.toString() + "/" + getData?.id)
+        val cursorUri = contentResolver?.query(uriWithId, null, null, null, null)
+        isAlreadyFavorite(cursorUri)
 
-        //persiapan untuk content resolver
-//        uriWithId = Uri.parse(CONTENT_URI.toString() + "/" + getData?.id)
-//        val checkFav = contentResolver?.query(uriWithId, null, null, null, null)
-//        isAlreadyFavorite(checkFav)
 
     }
 
@@ -114,18 +111,20 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-//    private fun isAlreadyFavorite(cekAkunFav: Cursor?) {
-//        val userFav = MappingHelper.mapCursorToArrayList(cekAkunFav)
-//        for (data in userFav) {
-//            if (this.getData?.id == data.id) {
-//                statusFavorite = true
-//            }
-//        }
-//    }
+    private fun isAlreadyFavorite(cursorUri: Cursor?) {
+        val userFav = MappingHelper.mapCursorToArrayList(cursorUri)
+        for (data in userFav) {
+            if (this.getData?.id == data.id) {
+                statusFavorite = true
+            }
+        }
+        setStatusFavorite(statusFavorite)
+    }
 
     private fun setFavorite() {
         if (statusFavorite) {
-            userHelper.deleteById(getData?.id.toString()).toLong()
+            contentResolver.delete(uriWithId, null, null)
+//            userHelper.deleteById(getData?.id.toString()).toLong()
 //                .delete(uriWithId, null, null)
             Toast.makeText(this, "${getData?.name} Unfavorited", Toast.LENGTH_SHORT).show()
             statusFavorite = false
@@ -138,8 +137,9 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
             values.put(_ID, getData?.id)
             values.put(COLUMN_NAME_USERNAME, getData?.username)
             values.put(COLUMN_NAME_AVATAR_URL, getData?.avatar)
-            val result = userHelper.insert(values)
-            setResult(RESULT_ADD, intent)
+            contentResolver.insert(CONTENT_URI, values)
+//            val result = userHelper.insert(values)
+//            setResult(RESULT_ADD, intent)
 //            contentResolver.insert(CONTENT_URI, values)
             Toast.makeText(this, "${getData?.name} Favorited", Toast.LENGTH_SHORT).show()
             statusFavorite = true

@@ -14,6 +14,7 @@ object DatabaseContract {
             const val COLUMN_NAME_USERNAME = "username"
             const val COLUMN_NAME_AVATAR_URL = "avatar_url"
 
+            //example : content//com.ziesapp.githubuserapp/favorite_user
             val CONTENT_URI: Uri = Uri.Builder().scheme(SCHEME)
                 .authority(AUTHORITY)
                 .appendPath(TABLE_NAME)
